@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<title>Pi Guessing Game</title>
+</head>
+
+<body class="bg-gray-100 font-roboto">
+	<main class="flex items-center justify-center min-h-screen">
+		<div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+			<nav class="text-white py-4 flex gap-5 mx-4">
+				<a href='index.html'>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-calculator">
+						<rect width="16" height="20" x="4" y="2" rx="2" />
+						<line x1="8" x2="16" y1="6" y2="6" />
+						<line x1="16" x2="16" y1="14" y2="18" />
+						<path d="M16 10h.01" />
+						<path d="M12 10h.01" />
+						<path d="M8 10h.01" />
+						<path d="M12 14h.01" />
+						<path d="M8 14h.01" />
+						<path d="M12 18h.01" />
+						<path d="M8 18h.01" />
+					</svg>
+				</a>
+				<a href="temperature.html">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-thermometer">
+						<path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
+					</svg>
+				</a>
+				<a href="age.html">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-cake">
+						<path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" />
+						<path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1" />
+						<path d="M2 21h20" />
+						<path d="M7 8v3" />
+						<path d="M12 8v3" />
+						<path d="M17 8v3" />
+						<path d="M7 4h.01" />
+						<path d="M12 4h.01" />
+						<path d="M17 4h.01" />
+					</svg>
+				</a>
+				<a href="numeric.html">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-binary">
+						<path d="M6 20h4" />
+						<path d="M14 10h4" />
+						<path d="M6 14h2v6" />
+						<path d="M14 4h2v6" />
+						<rect x="6" y="4" width="4" height="6" />
+						<rect x="14" y="14" width="4" height="6" />
+					</svg>
+				</a>
+				<a href="inflation.html">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-trending-up">
+						<polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+						<polyline points="17 6 23 6 23 12" />
+					</svg>
+				</a>
+				<a href="pi.html" class='text-orange-500'>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="lucide lucide-pi">
+						<line x1="9" x2="9" y1="4" y2="20" />
+						<path d="M4 7c0-1.7 1.3-3 3-3h13" />
+						<path d="M18 20c-1.7 0-3-1.3-3-3V4" />
+					</svg>
+				</a>
+			</nav>
+			<div class="bg-gray-700 p-4 rounded-t-lg mb-4">
+				<h2 class="text-white text-xl font-bold mb-2">Pi Guessing Game</h2>
+				<p id="piDisplay" class="text-white text-2xl font-mono mb-2">3.</p>
+				<input type="number" id="guessInput" placeholder="Enter next digit"
+					class="w-full p-2 rounded bg-gray-600 text-white mb-2">
+				<button id="guessBtn"
+					class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+					Guess
+				</button>
+			</div>
+			<div id="result" class="text-white space-y-2">
+				<p id="scoreDisplay">Score: 0</p>
+				<p id="feedbackDisplay"></p>
+				<p id="highScoreDisplay">High Score: 0</p>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		const piDigits = "14159265358979323846264338327950288419716939937510"
+		let currentIndex = 0
+		let score = 0
+		let highScore = 0
+
+		const piDisplay = document.getElementById('piDisplay')
+		const guessInput = document.getElementById('guessInput')
+		const guessBtn = document.getElementById('guessBtn')
+		const scoreDisplay = document.getElementById('scoreDisplay')
+		const feedbackDisplay = document.getElementById('feedbackDisplay')
+		const highScoreDisplay = document.getElementById('highScoreDisplay')
+
+		function updateDisplay() {
+			piDisplay.textContent = "3." + piDigits.slice(0, currentIndex)
+			scoreDisplay.textContent = `Score: ${score}`
+			highScoreDisplay.textContent = `High Score: ${highScore}`
+		}
+
+		function resetGame() {
+			currentIndex = 0
+			score = 0
+			updateDisplay()
+		}
+
+		function checkGuess() {
+			const guess = guessInput.value.trim()
+			if (guess === piDigits[currentIndex]) {
+				currentIndex++
+				score++
+				feedbackDisplay.textContent = "Correct!"
+				feedbackDisplay.className = "text-green-500"
+				if (score > highScore) {
+					highScore = score
+				}
+			} else {
+				feedbackDisplay.textContent = `Game Over! The correct digit was "${piDigits[currentIndex]}"`
+				feedbackDisplay.className = "text-red-500"
+				resetGame()
+			}
+			updateDisplay()
+			guessInput.value = ""
+			guessInput.focus()
+		}
+
+		guessBtn.addEventListener('click', checkGuess)
+		guessInput.addEventListener('keyup', function (event) {
+			if (event.key === 'Enter') {
+				checkGuess()
+			}
+		})
+
+		updateDisplay();
+	</script>
+
+</body>
+
+</html>
